@@ -12,15 +12,17 @@ app.get('/' , (req , res)=>{
       res.sendFile(__dirname + '/index.html');
 }) ;
 
-io.on('connection' , (socket) =>{
-     socket.on('users message' , (msg)=>{
-         // console.log('users message ' + msg);
-          io.emit('server message', msg );
-     })
+var cnsp = io.of('/custom-namespace') ;
+
+cnsp.on('connection' , (socket)=>{
+        cnsp.emit('rahul', "hii there!!") ;
 })
 
+io.on('connection' , (socket)=>{
+        io.emit('apnaevent' , "hii apna event");
+})
 
 server.listen(3000 , ()=>{
       console.log('application is runing on the port 3000');
-} ) ;
+}) ;
 
